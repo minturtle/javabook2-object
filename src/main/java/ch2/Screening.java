@@ -14,8 +14,8 @@ public class Screening {
         this.playTime = playTime;
     }
 
-    public int getfinalPrice(int reversePeopleAmount){
-        return movie.getMovieFee(this) * reversePeopleAmount;
+    public int getfinalPrice(){
+        return movie.getMovieFee(this);
     }
 
 

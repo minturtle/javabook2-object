@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 
-class CustomerTest {
+class TicketingTest {
 
     private Customer customer;
     private Movie movie;
@@ -77,7 +77,7 @@ class CustomerTest {
         //when
         customer.reserve(screening);
         //then
-        //두개를 만족하더라도 가격할인가는 같아야 함.
+        //두개를 만족하더라도 가격할인가는 1개만 적용.
         assertThat(customer.getTicketPrice()).isEqualTo(20000 - (2 * DISCOUNT_AMOUNT));
         assertThat(customer.getMoney()).isEqualTo(2 * DISCOUNT_AMOUNT);
     }

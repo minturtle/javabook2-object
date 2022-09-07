@@ -12,9 +12,9 @@ public class Customer {
     }
 
     public void reserve(Screening screening)throws NotEnoughMoney{
-        int finalPrice = screening.getfinalPrice(peopleAmount);
+        int finalPrice = screening.getfinalPrice() * peopleAmount;
         pay(finalPrice);
-        ticketing = Ticketing.create(screening, peopleAmount, finalPrice);
+        ticketing = Ticketing.create(screening, finalPrice, finalPrice);
     }
 
 

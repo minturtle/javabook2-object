@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ch2.TicketingTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-01-02T01:45:09" hostname="DESKTOP-6AQFF8V" time="0.077">
+  <properties/>
+  <testcase name="load objects" classname="ch2.TicketingTest" time="0.065"/>
+  <testcase name="티켓 구매하기" classname="ch2.TicketingTest" time="0.007"/>
+  <testcase name="티켓 구매하기 - 여석이 없음" classname="ch2.TicketingTest" time="0.002"/>
+  <testcase name="티켓 구매하기 - 돈이 없음" classname="ch2.TicketingTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

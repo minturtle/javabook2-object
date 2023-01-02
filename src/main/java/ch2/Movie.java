@@ -1,27 +1,20 @@
 package ch2;
 
-import ch2.discountPolicy.DiscountPolicy;
-
-import java.time.LocalDateTime;
-
 public class Movie {
+    private String name;
+    private long price;
 
-    private String title;
-    private int price;
-    private DiscountPolicy discountPolicy;
 
-    public Movie(String title, int price, DiscountPolicy discountPolicy) {
-        this.title = title;
+    public Movie(String name, long price) {
+        this.name = name;
         this.price = price;
-        this.discountPolicy = discountPolicy;
     }
 
-    public int getMovieFee(Screening screening){
-        return discountPolicy.calculateMovieFee(screening, price);
+    public String getName() {
+        return name;
     }
 
-
-    public void setDiscountPolicy(DiscountPolicy discountPolicy) {
-        this.discountPolicy = discountPolicy;
+    public long getPrice() {
+        return price;
     }
 }

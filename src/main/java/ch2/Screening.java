@@ -5,25 +5,32 @@ import java.time.LocalDateTime;
 public class Screening {
 
     private Movie movie;
-    private int sequence;
-    private LocalDateTime playTime;
+    private LocalDateTime startTime;
+    private int spareSeat;
 
-    public Screening(Movie movie, int sequence, LocalDateTime playTime) {
+    public Screening(Movie movie, LocalDateTime startTime, int spareSeat) {
         this.movie = movie;
-        this.sequence = sequence;
-        this.playTime = playTime;
+        this.startTime = startTime;
+        this.spareSeat = spareSeat;
     }
 
-    public int getfinalPrice(){
-        return movie.getMovieFee(this);
+    public Ticket reservate(){
+        if(spareSeat <= 0) throw new CannotReservationException("여석이 없습니다.");
+        spareSeat--;
+        return new Ticket(movie.getName(), startTime);
     }
 
-
-    public int getSequence() {
-        return sequence;
+    public long getPrice(){
+        return movie.getPrice();
     }
 
-    public LocalDateTime getPlayTime() {
-        return playTime;
+    public int getSpareSeat() {
+        return spareSeat;
+    }
+
+    public static class CannotReservationException extends RuntimeException{
+        public CannotReservationException(String message) {
+            super(message);
+        }
     }
 }

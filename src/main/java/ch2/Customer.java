@@ -2,36 +2,25 @@ package ch2;
 
 public class Customer {
 
-    private int money;
-    private int peopleAmount;
-    private Ticketing ticketing;
+    private long amount;
+    private Ticket ticket;
 
-    public Customer(int money, int peopleAmount) {
-        this.money = money;
-        this.peopleAmount = peopleAmount;
+    public Customer(long amount) {
+        this.amount = amount;
+        this.ticket = null;
     }
 
-    public void reserve(Screening screening)throws NotEnoughMoney{
-        int finalPrice = screening.getfinalPrice() * peopleAmount;
-        pay(finalPrice);
-        ticketing = Ticketing.create(screening, finalPrice, finalPrice);
+    public void buy(Screening screening){
+        if(amount < screening.getPrice()) throw new Screening.CannotReservationException("잔액이 부족합니다.");
+        amount -= screening.getPrice();
+        this.ticket = screening.reservate();
     }
 
-
-
-    public int getTicketPrice() {
-        return ticketing.getTotalPrice();
+    public long getAmount() {
+        return amount;
     }
 
-    public int getMoney() {
-        return money;
+    public Ticket getTicket() {
+        return ticket;
     }
-
-    private void pay(int price) throws NotEnoughMoney{
-        if(money < price) throw new NotEnoughMoney();
-        money -= price;
-
-    }
-
-    public static class NotEnoughMoney extends RuntimeException{}
 }

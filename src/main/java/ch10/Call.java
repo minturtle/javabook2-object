@@ -24,4 +24,8 @@ public class Call {
     public LocalDateTime getEndTime() {
         return endTime;
     }
+
+    public Long getSeconds(){
+        return getDuration().getSeconds();
+    }
 }

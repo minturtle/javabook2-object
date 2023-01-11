@@ -15,16 +15,17 @@ public class NightlyDiscountPhone extends Phone{
     @Override
     public Double calculateFee() {
         CallingPlan plan = getPlan();
-        Double normalFee = super.calculateFee();
+        double normalFee = 0.0;
 
         for(Call call : getCallList()){
-            if(call.getStartTime().getHour() > LATE_NIGHT_HOUR){
-                normalFee -= (double)plan.getAmount() * call.getDuration().getSeconds() / plan.getSeconds();
-                normalFee += (double)nightPlan.getAmount() * call.getDuration().getSeconds() / nightPlan.getSeconds();
-            }
+            normalFee += getFeeByCall(call, isLateTime(call) ? nightPlan : plan);
         }
 
         return normalFee;
+    }
+
+    private boolean isLateTime(Call call) {
+        return call.getStartTime().getHour() > LATE_NIGHT_HOUR;
     }
 
 

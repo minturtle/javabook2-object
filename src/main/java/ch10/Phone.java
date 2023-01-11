@@ -15,13 +15,21 @@ public class Phone {
     }
 
     public Double calculateFee(){
-        Long resultSecond = getTotalCallSecond();
+        double resultFee = 0.0;
+        for(Call call : callList){
+            resultFee += getFeeByCall(call, plan);
+        }
 
-        return (double)resultSecond * plan.getAmount() / plan.getSeconds();
+        return resultFee;
     }
 
     public void call(Call call){
         callList.add(call);
+    }
+
+    //call당 요금 계산
+    protected double getFeeByCall(Call call, CallingPlan plan){
+        return (double)call.getSeconds() * plan.getAmount() / plan.getSeconds();
     }
 
     protected List<Call> getCallList(){
@@ -32,14 +40,7 @@ public class Phone {
         return plan;
     }
 
-    private Long getTotalCallSecond() {
-        Long resultSecond = 0L;
 
-        for(Call call : callList){
-            resultSecond += call.getDuration().getSeconds();
-        }
-        return resultSecond;
-    }
 }
 
 

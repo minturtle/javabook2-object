@@ -28,6 +28,10 @@ public class Phone {
         return Collections.unmodifiableList(callList);
     }
 
+    protected CallingPlan getPlan() {
+        return plan;
+    }
+
     private Long getTotalCallSecond() {
         Long resultSecond = 0L;
 

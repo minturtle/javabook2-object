@@ -16,4 +16,12 @@ public class Call {
     public Duration getDuration(){
         return Duration.between(startTime, endTime);
     }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
 }

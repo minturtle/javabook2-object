@@ -77,8 +77,7 @@ class PhoneTest {
     @DisplayName("심야 시간 요금제 적용한 요금 계산")
     void t4() throws Exception {
         //given
-        phone = new NightlyDiscountPhone(plan, nightPlan);
-
+        phone = new Phone(plan, nightPlan);
         phone.call(call1);
         phone.call(call2);
         //when

@@ -12,6 +12,8 @@ class PhoneTest {
 
     private CallingPlan plan;
     private CallingPlan nightPlan;
+    private AdditionalCallingPlan taxPlan;
+    private AdditionalCallingPlan fixSalePlan;
     private Phone phone;
     private Call call1;
     private Call call2;
@@ -22,7 +24,9 @@ class PhoneTest {
     void setUp() {
         plan = new NormalCallingPlan(10L, 5L); //10초당 5원 부과
         nightPlan = new NightlyCallingPlan(10L, 2L); //10초당 2원 부과
-        phone = new Phone(plan);
+        taxPlan = new TaxAdditionalCallingPlan(plan,3.3);
+        fixSalePlan = new FixSaleAdditionalCallingPlan(plan, 10);
+        phone = new Phone(List.of(plan));
         // 1분짜리 통화
         call1 = new Call(
                 LocalDateTime.of(2023, 1, 11, 1, 44, 20),
@@ -77,12 +81,55 @@ class PhoneTest {
     @DisplayName("심야 시간 요금제 적용한 요금 계산")
     void t4() throws Exception {
         //given
-        phone = new Phone(plan, nightPlan);
+        phone = new Phone(List.of(nightPlan, plan));
         phone.call(call1);
         phone.call(call2);
         //when
         Double fee = phone.calculateFee();
         //then
         assertThat(fee).isEqualTo(54.0);
+    }
+
+    @Test
+    @DisplayName("심야 적용 x 폰에 tax 적용")
+    void t5() throws Exception {
+        //given
+        phone = new Phone(List.of(plan), List.of(taxPlan));
+        phone.call(call1);
+        phone.call(call2);
+
+        //when
+        final Double fee = phone.calculateFee();
+        //then
+        assertThat(fee).isEqualTo(92.97);
+    }
+
+
+    @Test
+    @DisplayName("심야 적용 x 폰에 고정 할인 적용")
+    void t6() throws Exception {
+        //given
+        phone = new Phone(List.of(plan), List.of(fixSalePlan));
+        phone.call(call1);
+        phone.call(call2);
+
+        //when
+        final Double fee = phone.calculateFee();
+        //then
+        assertThat(fee).isEqualTo(70);
+    }
+
+    @Test
+    @DisplayName("심야 적용 x 폰에 tax 및 할인 적용")
+    void t7() throws Exception {
+        //given
+        phone = new Phone(List.of(plan), List.of(taxPlan, fixSalePlan));
+        phone.call(call1);
+        phone.call(call2);
+        //when
+        final Double fee = phone.calculateFee();
+
+        //then
+        assertThat(fee).isEqualTo(72.97);
     }
 }

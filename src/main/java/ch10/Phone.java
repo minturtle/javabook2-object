@@ -9,22 +9,28 @@ public class Phone {
     private List<Call> callList = new ArrayList<>();
 
     private List<CallingPlan> plans;
+    private List<AdditionalCallingPlan> additionalPlans;
 
-    public Phone(CallingPlan plan, CallingPlan nightPlan) {
-        plans = new ArrayList<>(List.of(nightPlan, plan));
+
+    // planList에 plan의 우선순위에 맞게 값을 넣어야 한다.
+    public Phone(List<CallingPlan> planList , List<AdditionalCallingPlan> additionalPlanList) {
+        plans = new ArrayList<>(planList);
+        additionalPlans = new ArrayList<>(additionalPlanList);
     }
 
-    // 심야 요금제 적용 아닌 휴대폰의 경우, 일반 요금제와 심야할인 요금제를 같은 객체로 사용
-    public Phone(CallingPlan plan) {
-        this(plan, plan);
+    public Phone(List<CallingPlan> plans) {
+        this(plans, List.of());
     }
 
     public Double calculateFee(){
         double resultFee = 0.0;
         for(Call call : callList){
+
+            //기본 정책은 하나의 plan만 적용해야 함.
             for(CallingPlan plan : plans){
                 if(plan.isSatisfy(call)){
-                    resultFee += plan.calculateFeeByCall(call);
+                    CallingPlan lastPlan = linkAdditionalPlans(plan);
+                    resultFee += lastPlan.calculateFee(call);
                     break;
                 }
             }
@@ -41,6 +47,15 @@ public class Phone {
         return Collections.unmodifiableList(callList);
     }
 
+    // AdditionalPlans가 있다면 연결해준다.
+    private CallingPlan linkAdditionalPlans(CallingPlan plan){
+        CallingPlan lastPlan = plan;
+        for(AdditionalCallingPlan additionalPlan : additionalPlans) {
+            additionalPlan.setNext(lastPlan);
+            lastPlan = additionalPlan;
+        }
+        return lastPlan;
+    }
 }
 
 

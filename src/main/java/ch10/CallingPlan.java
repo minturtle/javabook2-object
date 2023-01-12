@@ -4,5 +4,5 @@ public interface CallingPlan{
 
     boolean isSatisfy(Call call);
 
-    double calculateFeeByCall(Call call);
+    double calculateFee(Call call);
 }

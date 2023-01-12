@@ -18,7 +18,7 @@ public class NormalCallingPlan implements CallingPlan{
     }
 
     @Override
-    public double calculateFeeByCall(Call call) {
+    public double calculateFee(Call call) {
         return (double)call.getSeconds() * amount / seconds;
     }
 }

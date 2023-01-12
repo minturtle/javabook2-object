@@ -20,8 +20,8 @@ class PhoneTest {
 
     @BeforeEach
     void setUp() {
-        plan = new CallingPlan(10L, 5L); //10초당 5원 부과
-        nightPlan = new CallingPlan(10L, 2L); //10초당 2원 부과
+        plan = new NormalCallingPlan(10L, 5L); //10초당 5원 부과
+        nightPlan = new NightlyCallingPlan(10L, 2L); //10초당 2원 부과
         phone = new Phone(plan);
         // 1분짜리 통화
         call1 = new Call(
